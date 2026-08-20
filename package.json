@@ -1,0 +1,17 @@
+{
+  "name": "crap4ts",
+  "version": "0.1.0",
+  "description": "CRAP metric for TypeScript and TSX functions",
+  "type": "module",
+  "bin": { "crap4ts": "dist/index.js" },
+  "files": ["dist", "README.md", "SKILL.md", "LICENSE"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && node --test test/*.test.mjs",
+    "prepack": "npm run build"
+  },
+  "dependencies": { "typescript": "^5.8.3" },
+  "devDependencies": { "@types/node": "^22.15.0" },
+  "engines": { "node": ">=20" },
+  "license": "MIT"
+}

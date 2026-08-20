@@ -1,0 +1,7 @@
+node_modules/
+dist/
+target/
+coverage/
+.cache/
+.DS_Store
+*.tgz
