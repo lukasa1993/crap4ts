@@ -1,54 +1,19 @@
 # crap4ts
 
-`crap4ts` calculates the Change Risk Anti-Pattern metric for TypeScript and TSX functions.
-
-```text
-CRAP = CC² × (1 - coverage)³ + CC
-```
-
-It uses the TypeScript compiler API for function boundaries and cyclomatic complexity. It reads Istanbul `coverage-final.json` or LCOV coverage.
-
-## Install
+`crap4ts` calculates function-level CRAP scores for TypeScript source with a Tree-sitter syntax tree and executable-line coverage. Missing coverage is an error by default.
 
 ```bash
-npm install --global github:lukasa1993/crap4ts
-```
-
-## Run
-
-From a project that uses Vitest:
-
-```bash
+pipx install git+https://github.com/lukasa1993/crap4ts.git
 crap4ts --fail-over 6
 ```
 
-The default coverage command is:
+Supported coverage inputs: LCOV, Cobertura XML, coverage.py JSON, Istanbul JSON, and LLVM export JSON. Use `--no-test` to analyze an existing report. Use `--allow-missing-coverage` only for exploratory work.
 
-```bash
-npx vitest run --coverage --coverage.reporter=json --coverage.reportsDirectory=target/coverage
-```
-
-For Jest or another runner:
-
-```bash
-crap4ts --test-command "npm test -- --coverage --coverageReporters=json"   --coverage coverage/coverage-final.json
-```
-
-Read an existing report without tests:
-
-```bash
-crap4ts --no-test --coverage target/coverage/lcov.info
-```
-
-Use `--json` for machine-readable output. Positional path fragments limit source discovery.
-
-## Complexity rules
-
-Each function starts at `1`. The tool adds points for branches, loops, switch clauses, catches, conditional expressions, and `&&`, `||`, and `??` operators. Nested functions receive separate scores.
+Exit status: `0` pass, `1` configuration/execution/coverage error, `2` quality limit failure.
 
 ## Development
 
 ```bash
-npm ci
-npm test
+python -m pip install -e . pytest
+pytest -q
 ```
